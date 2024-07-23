@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+       #control-panel{
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        width: max-content;
+        gap: 16px;
+       }
+        #main{
+            height: 100vh;
+            width: 100vw;
+            /* position: relative; */
+        }
+    </style>
+    <link rel="stylesheet" href="./btn.css">
+    <link rel="stylesheet" href="./shape.css">
+    <script src="./leader-line.min.js"></script>
+    <script src="./shape-directory.js"></script>
+    <script src="./main-logic.js"></script>
+</head>
+
+<body>
+    <div id="control-panel">
+        <input id="msg" placeholder="msg">
+        <input id="anchor-link" placeholder="anchor_link">
+        <select id="shape">
+            <option value="start">Start</option>
+            <option value="inputOutput">Input/Output</option>
+            <option value="process" selected>Process</option>
+            <option value="decision">Decision</option>
+            <option value="end">end</option>
+        </select>
+        <button class="bn632-hover bn26" id="addBtn">Add Shape</button>
+        <button class="bn632-hover bn26" id="drawLineBtn">Draw Line</button>
+        <button class="bn632-hover bn26" id="download">download</button>
+    </div>
+    <div id="main">
+
+    </div>
+    <script src="./global-variables.js"></script>
+
+</body>
+
+</html>
