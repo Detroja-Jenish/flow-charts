@@ -10,3 +10,5 @@ const download = document.getElementById("download");
 const msg = document.getElementById("msg");
 const anchor_link = document.getElementById("anchor-link");
 const shape = document.getElementById("shape")
+const consoleDiv = document.getElementById("console")
+const lineRegister = {}

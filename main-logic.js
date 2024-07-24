@@ -3,73 +3,33 @@ document.addEventListener("DOMContentLoaded", () => {
         isDrawLine = !isDrawLine;
     })
 
-    const lineRegister = {}
     const addShape = () => {
-  
-        
+
         const div = genrateShape(shape.value)
         main.appendChild(div);
         msg.value = ""
         anchor_link.value = ""
         div.addEventListener("mousedown", (e) => {
-            if (isDrawLine) {
-                if(selectedDivs.includes(div)){return}
-                div.classList.add("selected")
-                selectedDivs.push(div);
-                if (selectedDivs.length == 2) {
-                    const line = new LeaderLine(
-                        selectedDivs[0],
-                        selectedDivs[1],
-               
-                    )
-                    line.path = "fluid";
-                    line.color = "black"
-                    console.log(msg.value);
-                    if(msg.value !== ""){
-                        console.log("here");
-                        line.middleLabel = LeaderLine.captionLabel(msg.value, { color: 'black', offset: [-50,-30] })
-                    }
-
-                    line.show();
-
-
-                    if (selectedDivs[0] in lineRegister) {
-                        lineRegister[selectedDivs[0]].push(line);
-                    } else {
-                        lineRegister[selectedDivs[0]] = [line];
-                    }
-                    if (selectedDivs[1] in lineRegister) {
-                        lineRegister[selectedDivs[1]].push(line);
-                    } else {
-                        lineRegister[selectedDivs[1]] = [line];
-                    }
-                    selectedDivs[0].classList.remove("selected")
-                    selectedDivs[1].classList.remove("selected")
-                    selectedDivs = [];
-                    isDrawLine = false;
-                }
-            } else {
-                target = div.getAttribute("id");
+            if(isDrawLine){
+                drawLine(div)
+            }else{
+                dragInit(div)
             }
-
+        })
+        div.addEventListener("touchstart", (e) => {
+            if (isDrawLine) {
+                drawLine(div)
+            } else {
+                dragInit(div)
+            }
         })
 
     }
 
-    document.addEventListener("mousemove", (e) => {
-        if (target != 0) {
-            document.getElementById(target).style.top = `${ e.clientY }px`
-            document.getElementById(target).style.left = `${ e.clientX }px`
-            if (document.getElementById(target) in lineRegister) {
-                lines = lineRegister[document.getElementById(target)]
-                for (line of lines) {
-                    line.position()
-                }
-            }
-        }
-    })
+    document.addEventListener("mousemove", drag)
+    document.addEventListener("touchmove", drag)
     document.addEventListener("mouseup", (e) => {
-        target = 0
+        target = null
     })
     addBtn.addEventListener("click", addShape)
 
@@ -101,6 +61,15 @@ function createHtmlTemplate(data, documentName = "flow-cahrt") {
     <style>
     :root{
     font-size: 16px;
+}
+
+:root {
+    font-size: 16px;
+}
+
+body {
+    width: 300vw;
+    height: 300vh;
 }
 
 .process {
@@ -142,13 +111,41 @@ function createHtmlTemplate(data, documentName = "flow-cahrt") {
     max-width: 30ch;
     text-align: center;
     position: absolute;
-    background-color: rgba(0, 255, 0, 0.31);
-    border: 5px solid lime;
+
+    clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0% 50%);
+
+    &::after {
+        content: "";
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 255, 0, 0.31);
+        border: 5px solid lime;
+        top: -5px;
+        left: -5px;
+    }
+
     /* rotate: 45deg; */
-    
+
 }
 
-.input-output {}
+.input-output {
+    padding: 1em;
+    min-width: 20px;
+    min-height: 20px;
+    width: "min-content";
+    max-width: 30ch;
+    text-align: center;
+    position: absolute;
+    clip-path: polygon(0 0, 90% 0, 100% 100%, 10% 100%);
+    background-color: rgba(95, 158, 160, 0.312);
+    /* border: 5px solid cadetblue; */
+}
+
+.selected {
+    outline: 2px solid red;
+    outline-offset: 5px;
+}
        #control-panel{
         display: flex;
         flex-direction: row;

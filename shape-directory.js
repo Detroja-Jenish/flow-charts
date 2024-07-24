@@ -17,10 +17,19 @@ const end = (div) => {
 const decision = (div) => {
     div.setAttribute("class", "desicion");
     div.innerText = msg.value;
+    const anchor = document.createElement("a");
+    anchor.innerText = msg.value;
+    anchor.setAttribute("href", anchor_link.value);
+    div.appendChild(anchor);
 }
 
 const inputOutput = (div) => {
     div.setAttribute("class", "input-output");
+    div.innerText = msg.value;
+    const anchor = document.createElement("a");
+    anchor.innerText = msg.value;
+    anchor.setAttribute("href", anchor_link.value);
+    div.appendChild(anchor);
 }
 const _shapeGenrator = {
     "process": process,
